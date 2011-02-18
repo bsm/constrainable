@@ -1,3 +1,4 @@
+# Includable module, for ActiveRecord::Base
 module Bsm::Constrainable::Model
   extend ActiveSupport::Concern
 
@@ -8,6 +9,17 @@ module Bsm::Constrainable::Model
 
   module ClassMethods
 
+    # Constraint definition for a model. Example:
+    #
+    #   class Post < ActiveRecord::Base
+    #     constrainable do
+    #       # Add your default constraints
+    #     end
+    #     constrainable :custom do
+    #       # Add your custom constraints
+    #     end
+    #   end
+    #
     def constrainable(name = nil, &block)
       name = name.present? ? name.to_sym : :default
       _constrainable[name] ||= Bsm::Constrainable::Schema.new(self)
