@@ -3,7 +3,7 @@ class Bsm::Constrainable::Schema < Hash
   include ::Bsm::Constrainable::Util
   Field = ::Bsm::Constrainable::Field
 
-  def initialize(klass) # :nodoc:
+  def initialize(klass)
     @klass = klass
     super()
   end
@@ -57,11 +57,11 @@ class Bsm::Constrainable::Schema < Hash
   end
   alias_method :field, :match
 
-  def respond_to?(sym) # :nodoc:
+  def respond_to?(sym)
     super || Field.registered?(sym)
   end
 
-  def merge(relation, params) # :nodoc:
+  def merge(relation, params)
     each_part(params) do |name, part|
       self[name].each do |constrain|
         relation = constrain.merge(relation, part)

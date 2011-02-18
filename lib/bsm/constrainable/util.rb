@@ -1,4 +1,4 @@
-module Bsm::Constrainable::Util # :nodoc:
+module Bsm::Constrainable::Util
   extend self
 
   def normalized_hash(hash)

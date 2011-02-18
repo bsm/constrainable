@@ -1,7 +1,7 @@
 require "active_support/core_ext"
 
-module Bsm
-  module Constrainable
+module Bsm # @private
+  module Constrainable # @private
     autoload :Util,       "bsm/constrainable/util"
     autoload :Model,      "bsm/constrainable/model"
     autoload :Relation,   "bsm/constrainable/relation"
@@ -9,7 +9,6 @@ module Bsm
     autoload :Registry,   "bsm/constrainable/registry"
     autoload :Field,      "bsm/constrainable/field"
     autoload :Operation,  "bsm/constrainable/operation"
-    autoload :Filter,     "bsm/constrainable/filter"
   end
 end
 
