@@ -7,6 +7,7 @@ module Bsm::Constrainable::Field
   autoload :Decimal,  'bsm/constrainable/field/common'
   autoload :String,   'bsm/constrainable/field/common'
   autoload :Timestamp,'bsm/constrainable/field/common'
+  autoload :Datetime, 'bsm/constrainable/field/common'
   autoload :Date,     'bsm/constrainable/field/common'
 
   register self::Number
@@ -14,5 +15,6 @@ module Bsm::Constrainable::Field
   register self::Decimal
   register self::String
   register self::Timestamp
+  register self::Datetime
   register self::Date
 end

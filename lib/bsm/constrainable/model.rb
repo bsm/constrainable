@@ -10,7 +10,7 @@ module Bsm::Constrainable::Model
 
     def constrainable(name = nil, &block)
       name = name.present? ? name.to_sym : :default
-      _constrainable[name] ||= Bsm::Constrainable::Schema.new
+      _constrainable[name] ||= Bsm::Constrainable::Schema.new(self)
       _constrainable[name.to_sym].instance_eval(&block) if block
       _constrainable[name]
     end

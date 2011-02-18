@@ -41,6 +41,10 @@ describe "Common Fields" do
     it { subject.convert("2011-11-11 11:11").should == Time.utc(2011, 11, 11, 11, 11) }
   end
 
+  describe Bsm::Constrainable::Field::Datetime do
+    it { subject.class.should have(7).operators }
+  end
+
   describe Bsm::Constrainable::Field::Date do
     it { subject.class.should have(7).operators }
     it { subject.convert("a").should == nil }

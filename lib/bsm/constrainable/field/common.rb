@@ -33,6 +33,9 @@ module Bsm::Constrainable::Field
     end
   end
 
+  class Datetime < Timestamp
+  end
+
   class Date < Base
     protected
 

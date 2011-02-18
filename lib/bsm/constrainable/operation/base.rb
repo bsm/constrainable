@@ -29,6 +29,7 @@ class Bsm::Constrainable::Operation::Base
   def clause
     valid? ? _clause : nil
   end
+  memoize :clause
 
   protected
 

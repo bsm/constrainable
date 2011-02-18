@@ -3,7 +3,7 @@ class Bsm::Constrainable::Field::Base
 
   class_inheritable_accessor :operators, :defaults, :instance_reader => false, :instance_writer => false
   self.operators = DEFAULT_OPERATORS.dup
-  self.defaults  = [:eq]
+  self.defaults  = [:eq, :not_eq]
 
   def self.kind
     @kind ||= name.demodulize.underscore.to_sym
@@ -22,11 +22,10 @@ class Bsm::Constrainable::Field::Base
   def merge(relation, params)
     params.slice(*operators).each do |operator, value|
       operation = Bsm::Constrainable::Operation.new(operator, value, relation, self)
-      clause    = operation.clause
-      next if clause.nil?
+      next if operation.clause.nil?
 
-      relation = relation.instance_eval(&:scope) if scope
-      relation = relation.where(clause)
+      relation = relation.instance_eval(&scope) if scope
+      relation = relation.where(operation.clause)
     end
     relation
   end

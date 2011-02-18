@@ -11,4 +11,6 @@ module Bsm::Constrainable::Operation
   end
   class Lteq < Base
   end
+  class Matches < Base
+  end
 end

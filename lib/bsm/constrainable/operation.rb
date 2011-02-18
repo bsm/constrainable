@@ -9,6 +9,7 @@ module Bsm::Constrainable::Operation
   autoload :Lt,      'bsm/constrainable/operation/common'
   autoload :Gteq,    'bsm/constrainable/operation/common'
   autoload :Lteq,    'bsm/constrainable/operation/common'
+  autoload :Matches, 'bsm/constrainable/operation/common'
   autoload :In,      'bsm/constrainable/operation/in'
   autoload :NotIn,   'bsm/constrainable/operation/not_in'
   autoload :Between, 'bsm/constrainable/operation/between'
@@ -21,5 +22,6 @@ module Bsm::Constrainable::Operation
   register self::Lt
   register self::Gteq
   register self::Lteq
+  register self::Matches
   register self::Between
 end

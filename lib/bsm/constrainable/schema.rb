@@ -2,8 +2,19 @@ class Bsm::Constrainable::Schema < Hash
   include ::Bsm::Constrainable::Util
   Field = ::Bsm::Constrainable::Field
 
-  def initialize
+  def initialize(klass)
+    @klass = klass
     super()
+  end
+
+  def fields(*names)
+    options = names.extract_options!
+    names.map(&:to_s).each do |name|
+      column = @klass.columns_hash[name]
+      raise ArgumentError, "Invalid field #{name}" unless column
+      raise ArgumentError, "Invalid field type #{column.type}" unless Field.registered?(column.type)
+      match name, options.merge(:as => column.type)
+    end
   end
 
   def match(*names)
