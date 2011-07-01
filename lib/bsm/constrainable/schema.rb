@@ -39,7 +39,7 @@ class Bsm::Constrainable::Schema < Hash
   #   match :created, :using => :created_at, :as => :timestamp, :with => [:lt, :between]
   #
   #   # Complex example, using an attribute from another table, and ensure it's included (LEFT OUTER JOIN)
-  #   match :author, :using => lambda { Author.scope.table[:name] }, :scope => { includes(:author) }, :as => :string, :with => [:eq, :matches]
+  #   match :author, :using => proc { Author.scope.table[:name] }, :scope => { includes(:author) }, :as => :string, :with => [:eq, :matches]
   #
   # There are also several short-cutrs available. Examples:
   #

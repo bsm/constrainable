@@ -10,9 +10,11 @@ Let's asume we have a model called Post, defined as:
 In the simplest possible case you can define a few attributes and start filtering:
 
     class Post < ActiveRecord::Base
+
       constrainable do
         fields :id, :author_id
       end
+
     end
 
     # Examle request:
@@ -26,10 +28,12 @@ In the simplest possible case you can define a few attributes and start filterin
 By default, only *eq* and *not_eq* operations are enabled, but there are plenty more:
 
     class Post < ActiveRecord::Base
+
       constrainable do
         fields :id, :author_id, :with => [:in, :not_in, :gt, :gteq, :lt, :lteq]
         fields :created_at, :with => [:between]
       end
+
     end
 
     # Example request (various notations are accepted):
@@ -42,9 +46,11 @@ By default, only *eq* and *not_eq* operations are enabled, but there are plenty 
 Want to *alias* a column? Try this:
 
     class Post < ActiveRecord::Base
+
       constrainable do
         timestamp :created, :using => :created_at, :with => [:lt, :lte, :between]
       end
+
     end
     # Example request:
     #   GET /posts?where[created][lt]=2011-01-01
@@ -53,8 +59,9 @@ What about associations?
 
     class Post < ActiveRecord::Base
       belongs_to :author
+
       constrainable do
-        string :author_name, :using => lambda { Author.scoped.table[:name] }, :with => [:matches], :scope => lambda { includes(:author) }
+        string :author_name, :using => lambda { Author.arel_table[:name] }, :with => [:matches], :scope => lambda { includes(:author) }
       end
     end
     # Example request:

@@ -9,5 +9,5 @@ group :test do
   gem "rspec"
   gem "rspec-rails", :require => false
   gem "sqlite3-ruby"
-  gem "shoulda", "~> 3.0.0.beta"
+  gem "shoulda-matchers"
 end

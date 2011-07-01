@@ -33,7 +33,7 @@ describe Bsm::Constrainable::Field::Base do
 
   it 'should allow using special attributes & clauses' do
     integer(:using => :other).attribute.should == :other
-    integer(:using => lambda { }).attribute.should be_a(Proc)
+    integer(:using => proc { }).attribute.should be_a(Proc)
   end
 
   it 'should convert inputs' do

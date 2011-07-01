@@ -22,9 +22,9 @@ class Bsm::Constrainable::Field::Base
   #
   #   Field::Integer.new :id
   #   Field::Integer.new :uid, :using => :id
-  #   Field::Integer.new :uid, :using => lambda { Model.scoped.table[:col_name] }
+  #   Field::Integer.new :uid, :using => proc { Model.scoped.table[:col_name] }
   #   Field::String.new :name, :with => [:matches]
-  #   Field::String.new :author, :with => [:matches], :using => lambda { Author.scoped.table[:name] }, :scope => labmda { includes(:author) }
+  #   Field::String.new :author, :with => [:matches], :using => proc { Author.scoped.table[:name] }, :scope => proc { includes(:author) }
   #
   def initialize(name, options = {})
     @name      = name.to_s

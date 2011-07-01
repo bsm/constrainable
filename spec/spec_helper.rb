@@ -60,10 +60,10 @@ class Post < ActiveRecord::Base
   constrainable do
     integer   :id, :author_id, :with => [:in, :not_in]
     timestamp :created, :using => :created_at, :with => [:gt, :lt, :between]
-    match     :author_name, :as => :string, :using => lambda { Author.scoped.table[:name] }, :scope => lambda { includes(:author) }
+    match     :author_name, :as => :string, :using => proc { Author.scoped.table[:name] }, :scope => proc { includes(:author) }
     string    :category
   end
 
-  scope :articles, lambda { where(:category => "article") }
+  scope :articles, proc { where(:category => "article") }
 end
 
