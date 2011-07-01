@@ -9,6 +9,7 @@ Bundler.require :default, :test
 require 'active_support'
 require 'active_record'
 require 'active_record/fixtures'
+require 'action_view'
 require 'rspec'
 require 'rspec/rails/adapters'
 require 'rspec/rails/fixture_support'

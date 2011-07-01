@@ -1,3 +1,11 @@
+PATH
+  remote: .
+  specs:
+    constrainable (0.3.0)
+      abstract
+      activerecord (~> 3.0.0)
+      activesupport (~> 3.0.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -65,10 +73,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  abstract
-  activemodel
-  activerecord
-  activesupport
+  actionpack
+  constrainable!
   rspec
   rspec-rails
   shoulda-matchers

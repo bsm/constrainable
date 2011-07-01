@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Bsm::Constrainable::Model do
 
-  let(:model) do
+  let :model do
     Class.new(ActiveRecord::Base)
   end
 
@@ -26,6 +26,12 @@ describe Bsm::Constrainable::Model do
   it 'should allow to retrieve the schema without definition' do
     model.constrainable.should be_a(Bsm::Constrainable::Schema)
   end
+
+  it 'should delegate constrain to relation' do
+    sql = Post.constrain(:author_id => {:in => 1}).to_sql
+    sql.clean_sql.should == "SELECT posts.* FROM posts WHERE posts.author_id IN (1)"
+  end
+
 
 end
 

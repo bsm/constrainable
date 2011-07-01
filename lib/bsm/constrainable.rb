@@ -9,6 +9,7 @@ module Bsm # @private
     autoload :Registry,   "bsm/constrainable/registry"
     autoload :Field,      "bsm/constrainable/field"
     autoload :Operation,  "bsm/constrainable/operation"
+    autoload :FilterSet,  "bsm/constrainable/filter_set"
   end
 end
 

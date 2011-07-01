@@ -35,5 +35,11 @@ describe Bsm::Constrainable::Schema do
     subject.should have(6).items
   end
 
+  it 'should create filter-sets for given params' do
+    fs = subject.filter 'author_id' => { 'in' => '1' }, 'created' => { 'gt' => '2010-10-10' }
+    fs.should be_a(Bsm::Constrainable::FilterSet)
+    fs.should == { "author_id"=>{:in=>"1"}, "created"=>{:gt=>"2010-10-10"} }
+  end
+
 end
 

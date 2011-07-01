@@ -1,6 +1,5 @@
 # Schema definition.
 class Bsm::Constrainable::Schema < Hash
-  include ::Bsm::Constrainable::Util
   Field = ::Bsm::Constrainable::Field
 
   def initialize(klass)
@@ -57,17 +56,18 @@ class Bsm::Constrainable::Schema < Hash
   end
   alias_method :field, :match
 
-  def respond_to?(sym)
-    super || Field.registered?(sym)
+  # Creates a FilterSet object for given params. Filter-sets can be used to
+  # constrain relations as well as e.g. in forms. Example:
+  #
+  #   filters = Post.constrainable.filter(params[:where])
+  #   Post.archived.constrain(filters).limit(100)
+  #
+  def filter(params = nil)
+    Bsm::Constrainable::FilterSet.new self, params
   end
 
-  def merge(relation, params)
-    each_part(params) do |name, part|
-      self[name].each do |constrain|
-        relation = constrain.merge(relation, part)
-      end
-    end
-    relation
+  def respond_to?(sym)
+    super || Field.registered?(sym)
   end
 
   protected
@@ -78,15 +78,6 @@ class Bsm::Constrainable::Schema < Hash
         match(*(args << opts))
       else
         super
-      end
-    end
-
-  private
-
-    def each_part(params)
-      params = normalized_hash(params)
-      params.slice(*keys).each do |name, part|
-        yield(name, part.symbolize_keys) if part.is_a?(Hash)
       end
     end
 
