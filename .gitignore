@@ -2,3 +2,4 @@
 .project
 spec/tmp
 doc
+*.gem
