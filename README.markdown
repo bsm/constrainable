@@ -70,3 +70,26 @@ What about associations?
     Post.constrain(params[:where])
     # => SELECT posts.* FROM posts LEFT OUTER JOIN authors ON authors.id = posts.author_id WHERE authors.name LIKE '%tom%'
 
+Integration with controllers, views & filter forms:
+
+    # In app/models/post.rb
+    class Post < ActiveRecord::Base
+      constrainable do
+        fields :author_id
+      end
+    end
+
+    # In app/controllers/posts_controller.rb
+    class PostsController < ApplicationController
+      respond_to :html
+
+      def index
+        @filters = Post.constrainable.fliter(params[:where])
+        @posts = Post.constrain(@filters)
+        respond_with @posts
+      end
+    end
+
+    # In app/views/posts/index.html.haml
+    = form_for @filters, :as => :where do
+      = f.collection_select :"author_id[eq]", Author.order('name'), :id, :name
