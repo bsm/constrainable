@@ -11,13 +11,13 @@ class Bsm::Constrainable::FilterSet < Hash
     end
   end
 
-  def merge(relation)
+  def merge(scoped)
     each do |name, part|
       schema[name].each do |field|
-        relation = field.merge(relation, part)
+        scoped = field.merge(scoped, part)
       end
     end
-    relation
+    scoped
   end
 
   def respond_to?(sym, *)

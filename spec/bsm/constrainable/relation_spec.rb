@@ -21,7 +21,7 @@ describe Bsm::Constrainable::Relation do
     sql.clean_sql.should == "SELECT posts.* FROM posts WHERE posts.author_id IN (1)"
   end
 
-  it 'should apply scopes' do
+  it 'should respect constranable scopes' do
     sql = relation.constrain(:default, :author_id => {:in => 1}).to_sql
     sql.clean_sql.should == "SELECT posts.* FROM posts WHERE posts.author_id IN (1)"
 

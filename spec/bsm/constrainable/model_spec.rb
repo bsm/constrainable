@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe Bsm::Constrainable::Model do
+  fixtures :posts
 
   let :model do
     Class.new(ActiveRecord::Base)
@@ -32,6 +33,12 @@ describe Bsm::Constrainable::Model do
     sql.clean_sql.should == "SELECT posts.* FROM posts WHERE posts.author_id IN (1)"
   end
 
+  it 'should retain relation scopes' do
+    Post.articles.should have(1).record
+    Post.articles.constrain(:author_id => {:in => 1}).should have(1).record
+    Post.articles.constrain(:author_id => {:in => 2}).should have(:no).records
+    Post.constrain(:author_id => {:in => 2}).should have(1).record
+  end
 
 end
 

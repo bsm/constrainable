@@ -32,7 +32,7 @@ module Bsm::Constrainable::Model
 
     # Delegator to Relation#constrain
     def constrain(*args)
-      relation.constrain(*args)
+      scoped.constrain(*args)
     end
 
   end
