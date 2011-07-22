@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Bsm::Constrainable::Model do
-  fixtures :posts
+  fixtures :posts, :authors
 
   let :model do
     Class.new(ActiveRecord::Base)
@@ -35,10 +35,18 @@ describe Bsm::Constrainable::Model do
 
   it 'should retain relation scopes' do
     Post.articles.should have(1).record
+    Post.articles.constrain(nil).should have(1).record
+    Post.constrain(nil).articles.should have(1).record
+
     Post.articles.constrain(:author_id => {:in => 1}).should have(1).record
     Post.articles.constrain(:author_id => {:in => 2}).should have(:no).records
     Post.constrain(:author_id => {:in => 2}).should have(1).record
   end
 
+  it 'should retain association scopes' do
+    authors(:alice).posts.articles.should have(1).record
+    authors(:alice).posts.constrain(nil).articles.should have(1).record
+    authors(:alice).posts.articles.constrain(nil).should have(1).record
+  end
 end
 
