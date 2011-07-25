@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name        = "constrainable"
   s.summary     = "Simple filtering for ActiveRecord"
   s.description = "Sanitizes simple and readable query parameters -great for building APIs & HTML filters"
-  s.version     = '0.3.1'
+  s.version     = '0.4.0'
 
   s.authors     = ["Dimitrij Denissenko"]
   s.email       = "dimitrij@blacksquaremedia.com"

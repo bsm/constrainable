@@ -15,8 +15,8 @@ describe Bsm::Constrainable::Field::Base do
     Post._constrainable[:default][name].first
   end
 
-  def merge(name, params = {})
-    field(name).merge(Post.scoped, params)
+  def merge(name, operator, value)
+    field(name).merge(Post.scoped, operator, value)
   end
 
   it { described_class.should have(7).operators }
@@ -42,15 +42,22 @@ describe Bsm::Constrainable::Field::Base do
     integer.convert([1, 'a', 2]).should == [1, nil, 2]
   end
 
-  it 'should parse params and merge valid scopes' do
-    merge("id", :in => [1, 2, 3]).where_sql.clean_sql.should == "WHERE posts.id IN (1, 2, 3)"
-    merge("author_id", :in => [1, 3]).where_sql.clean_sql.should == "WHERE posts.author_id IN (1, 3)"
-    merge("created", :between => "2010-01-01..2010-02-01", :gt => "2010-01-01").where_values.map(&:to_sql).map(&:clean_sql).
-      should =~ ["posts.created_at >= '2010-01-01 00:00:00' AND posts.created_at <= '2010-02-01 00:00:00'", "posts.created_at > '2010-01-01 00:00:00'"]
+  it 'should merge valid scopes' do
+    merge("id", :in, [1, 2, 3]).where_sql.clean_sql.should == "WHERE posts.id IN (1, 2, 3)"
+    merge("author_id", :in, [1, 3]).where_sql.clean_sql.should == "WHERE posts.author_id IN (1, 3)"
+
+    merge("created", :between, "2010-01-01..2010-02-01").where_sql.clean_sql.should == "WHERE (posts.created_at >= '2010-01-01 00:00:00' AND posts.created_at <= '2010-02-01 00:00:00')"
+    merge("created", :gt, "2010-01-01").where_sql.clean_sql.should == "WHERE (posts.created_at > '2010-01-01 00:00:00')"
   end
 
-  it 'should include custom scopes' do
-    rel = merge("author_name", :eq => "Alice")
+  it 'should skip invalid scopes' do
+    merge("id", :invalid, "1").where_values.should == []
+    merge("id", :lt, "1").where_values.should == []
+    merge("id", :in, []).where_values.should == []
+  end
+
+  it 'should merge/include custom scopes' do
+    rel = merge("author_name", 'eq', "Alice")
     rel.includes_values.should == [:author]
     rel.where_sql.clean_sql.should == "WHERE authors.name = 'Alice'"
     rel.first.should == posts(:article)

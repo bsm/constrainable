@@ -3,10 +3,10 @@ module Bsm::Constrainable::Relation
 
   # Apply contraints. Example:
   #
-  #   Post.constrain("created_at" => { "lt" => "2011-01-01" }})
+  #   Post.constrain("created_at__lt" => "2011-01-01")
   #
   #   # Use "custom" constraints
-  #   Post.constrain(:custom, "created_at" => { "lt" => "2011-01-01" }})
+  #   Post.constrain(:custom, "created_at__lt" => "2011-01-01")
   #
   #   # Combine it with relations & scopes
   #   Post.archived.includes(:author).constrain(params[:where]).paginate :page => 1

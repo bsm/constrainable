@@ -11,7 +11,7 @@ describe Bsm::Constrainable::FilterSet do
   end
 
   subject do
-    filter_set 'author_id' => { 'in' => ['1', '2', '3'], 'lt' => '4' }, 'created' => { 'gt' => '2010-10-10' }, 'invalid' => "TRUE", 'empty' => {}
+    filter_set 'author_id__in' => ['1', '2', '3'], 'author_id__lt' => '4', 'created__gt' => '2010-10-10', 'invalid' => "TRUE", 'empty' => {}
   end
 
   def filter_set(params = nil)
@@ -25,7 +25,7 @@ describe Bsm::Constrainable::FilterSet do
   end
 
   it 'should normalize params' do
-    subject.should == {"author_id"=>{:in=>["1", "2", "3"], :lt=>"4"}, "created"=>{:gt=>"2010-10-10"}}
+    subject.should == { "author_id__in" => ["1", "2", "3"], "created__gt" => "2010-10-10" }
   end
 
   it 'should merge params into relations' do
@@ -34,18 +34,18 @@ describe Bsm::Constrainable::FilterSet do
   end
 
   it 'should have accessors to schema keys' do
-    subject.should respond_to(:author_id)
-    subject.author_id.should == { :in=>["1", "2", "3"], :lt=>"4" }
+    subject.should respond_to(:author_id__in)
+    subject.author_id__in.should == ["1", "2", "3"]
   end
 
   it 'should have form-processable accessors' do
-    subject.should respond_to(:"author_id[in]")
-    subject.send(:"author_id[in]").should == ["1", "2", "3"]
+    subject.should respond_to(:"author_id__in")
+    subject.send(:"author_id__in").should == ["1", "2", "3"]
 
-    subject.should respond_to("created[between]")
-    subject.send("created[between]").should be_nil
+    subject.should respond_to("created__between")
+    subject.send("created__between").should be_nil
 
-    subject.should_not respond_to("author[gt]")
+    subject.should_not respond_to("author__lt")
   end
 
   describe "in forms" do
@@ -55,7 +55,7 @@ describe Bsm::Constrainable::FilterSet do
     end
 
     let :filters do
-      filter_set 'author_id' => { 'in' => ['1', '2'] }, 'created' => { 'between' => ['2010-10-10', '2011-11-11'] }
+      filter_set 'author_id__in' => ['1', '2'], 'created__between' => ['2010-10-10', '2011-11-11']
     end
 
     def form(&block)
@@ -65,10 +65,10 @@ describe Bsm::Constrainable::FilterSet do
 
     it 'should be usable' do
       doc = form do |f|
-        f.select :"author_id[in]", [1,2,3,4,5]
+        f.select :"author_id__in", [1,2,3,4,5]
       end
       input = doc.find(:tag => "select")
-      input['name'].should == "where[author_id[in]]"
+      input['name'].should == "where[author_id__in]"
       choices = input.find_all(:tag => 'option')
       choices.map {|n| n['value'] }.should =~ ['1', '2', '3', '4', '5']
       choices.select {|n| n['selected'] }.map {|n| n['value'] }.should =~ ['1', '2']

@@ -35,15 +35,15 @@ class Bsm::Constrainable::Field::Base
   end
 
   # Merge params into a relation
-  def merge(relation, params)
-    params.slice(*operators).each do |operator, value|
-      operation = Bsm::Constrainable::Operation.new(operator, value, relation, self)
-      next if operation.clause.nil?
+  def merge(relation, operator, value)
+    operator = operator.to_sym
+    return relation unless operators.include?(operator)
 
-      relation = relation.instance_eval(&scope) if scope
-      relation = relation.where(operation.clause)
-    end
-    relation
+    operation = Bsm::Constrainable::Operation.new(operator, value, relation, self)
+    return relation if operation.clause.nil?
+
+    relation = relation.instance_eval(&scope) if scope
+    relation.where(operation.clause)
   end
 
   def convert(value)

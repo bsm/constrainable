@@ -29,7 +29,7 @@ describe Bsm::Constrainable::Model do
   end
 
   it 'should delegate constrain to relation' do
-    sql = Post.constrain(:author_id => {:in => 1}).to_sql
+    sql = Post.constrain(:author_id__in => 1).to_sql
     sql.clean_sql.should == "SELECT posts.* FROM posts WHERE posts.author_id IN (1)"
   end
 
@@ -38,9 +38,9 @@ describe Bsm::Constrainable::Model do
     Post.articles.constrain(nil).should have(1).record
     Post.constrain(nil).articles.should have(1).record
 
-    Post.articles.constrain(:author_id => {:in => 1}).should have(1).record
-    Post.articles.constrain(:author_id => {:in => 2}).should have(:no).records
-    Post.constrain(:author_id => {:in => 2}).should have(1).record
+    Post.articles.constrain(:author_id__in => 1).should have(1).record
+    Post.articles.constrain(:author_id__in => 2).should have(:no).records
+    Post.constrain(:author_id__in => 2).should have(1).record
   end
 
   it 'should retain association scopes' do
