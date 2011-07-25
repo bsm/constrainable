@@ -18,9 +18,9 @@ In the simplest possible case you can define a few attributes and start filterin
     end
 
     # Examle request:
-    #   GET /posts?where[id][not_eq]=1&where[author_id][eq]=2
+    #   GET /posts?where[id__not_eq]=1&where[author_id__eq]=2
     # Params:
-    #   "where" => { "id" => { "not_eq" => "1" }, "author_id" => { "eq" => "2" } }
+    #   "where" => { "id__not_eq" => "1", "author_id__eq" => "2" }
 
     Post.constrain(params[:where])
     # => SELECT posts.* FROM posts WHERE id != 1 AND author_id = 2
@@ -38,10 +38,10 @@ By default, only *eq* and *not_eq* operations are enabled, but there are plenty 
 
     # Example request (various notations are accepted):
     #   GET /posts?
-    #     where[id][not_in]=1|2|3|4&
-    #     where[author_id][in][]=1&
-    #     where[author_id][in][]=2&
-    #     where[created_at][between]=2011-01-01...2011-02-01
+    #     where[id__not_in]=1|2|3|4&
+    #     where[author_id__in][]=1&
+    #     where[author_id__in][]=2&
+    #     where[created_at__between]=2011-01-01...2011-02-01
 
 Want to *alias* a column? Try this:
 
@@ -53,7 +53,7 @@ Want to *alias* a column? Try this:
 
     end
     # Example request:
-    #   GET /posts?where[created][lt]=2011-01-01
+    #   GET /posts?where[created__lt]=2011-01-01
 
 What about associations?
 
@@ -65,7 +65,7 @@ What about associations?
       end
     end
     # Example request:
-    #   GET /posts?where[author][matches]=%tom%
+    #   GET /posts?where[author__matches]=%tom%
 
     Post.constrain(params[:where])
     # => SELECT posts.* FROM posts LEFT OUTER JOIN authors ON authors.id = posts.author_id WHERE authors.name LIKE '%tom%'
@@ -92,4 +92,4 @@ Integration with controllers, views & filter forms:
 
     # In app/views/posts/index.html.haml
     = form_for @filters, :as => :where do
-      = f.collection_select :"author_id[eq]", Author.order('name'), :id, :name
+      = f.collection_select :author_id__eq, Author.order('name'), :id, :name
