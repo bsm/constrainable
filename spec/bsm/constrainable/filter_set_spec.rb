@@ -7,15 +7,15 @@ describe Bsm::Constrainable::FilterSet do
   end
 
   let :relation do
-    Post.send(:relation)
-  end
-
-  subject do
-    filter_set 'author_id__in' => ['1', '2', '3'], 'author_id__lt' => '4', 'created__gt' => '2010-10-10', 'invalid' => "TRUE", 'empty' => {}
+    Post.scoped
   end
 
   def filter_set(params = nil)
     described_class.new schema, params
+  end
+
+  subject do
+    filter_set 'author_id__in' => ['1', '2', '3'], 'author_id__lt' => '4', 'created__gt' => '2010-10-10', 'invalid' => "TRUE", 'empty' => {}
   end
 
   it { should be_a(Hash) }
@@ -26,11 +26,11 @@ describe Bsm::Constrainable::FilterSet do
 
   it 'should normalize params' do
     subject.should == { "author_id__in" => ["1", "2", "3"], "created__gt" => "2010-10-10" }
+    filter_set.should == {}
   end
 
   it 'should merge params into relations' do
-    sql = subject.merge(relation).to_sql
-    sql.clean_sql.should == "SELECT posts.* FROM posts WHERE posts.author_id IN (1, 2, 3) AND (posts.created_at > '2010-10-10 00:00:00')"
+    subject.merge(relation).to_sql.clean_sql.should == "SELECT posts.* FROM posts WHERE posts.author_id IN (1, 2, 3) AND (posts.created_at > '2010-10-10 00:00:00')"
   end
 
   it 'should have accessors to schema keys' do

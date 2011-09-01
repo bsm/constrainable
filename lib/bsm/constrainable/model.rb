@@ -2,11 +2,6 @@
 module Bsm::Constrainable::Model
   extend ActiveSupport::Concern
 
-  included do
-    class_inheritable_accessor :_constrainable
-    self._constrainable = {}
-  end
-
   module ClassMethods
 
     # Constraint definition for a model. Example:
@@ -33,6 +28,11 @@ module Bsm::Constrainable::Model
     # Delegator to Relation#constrain
     def constrain(*args)
       scoped.constrain(*args)
+    end
+
+    # Store for constrainable definitions
+    def _constrainable
+      @constrainable ||= {}
     end
 
   end

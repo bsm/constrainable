@@ -16,7 +16,6 @@ require 'rspec/rails/fixture_support'
 require 'bsm/constrainable'
 
 SPEC_DATABASE     = File.dirname(__FILE__) + '/tmp/test.sqlite3'
-Time.zone_default = Time.__send__(:get_zone, "UTC")
 ActiveRecord::Base.time_zone_aware_attributes = true
 ActiveRecord::Base.default_timezone = :utc
 ActiveRecord::Base.configurations["test"] = { 'adapter' => 'sqlite3', 'database' => SPEC_DATABASE }
@@ -47,7 +46,7 @@ end
 class String
 
   def clean_sql
-    gsub(/[`"]/, "").gsub(/\.0+/, "")
+    squish.gsub(/[`"]/, "").gsub(/\.0+/, "")
   end
 
 end

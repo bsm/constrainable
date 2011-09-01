@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name        = "constrainable"
   s.summary     = "Simple filtering for ActiveRecord"
   s.description = "Sanitizes simple and readable query parameters -great for building APIs & HTML filters"
-  s.version     = '0.4.0'
+  s.version     = '0.5.0'
 
   s.authors     = ["Dimitrij Denissenko"]
   s.email       = "dimitrij@blacksquaremedia.com"
@@ -17,6 +17,6 @@ Gem::Specification.new do |s|
   s.files        = Dir['LICENSE', 'README.markdown', 'lib/**/*']
 
   s.add_dependency "abstract"
-  s.add_dependency "activerecord", "~> 3.0.0"
-  s.add_dependency "activesupport", "~> 3.0.0"
+  s.add_dependency "activerecord", ">= 3.0.0"
+  s.add_dependency "activesupport", ">= 3.0.0"
 end

@@ -2,7 +2,7 @@
 class Bsm::Constrainable::Field::Base
   DEFAULT_OPERATORS = [:eq, :not_eq, :gt, :gteq, :lt, :lteq, :between].freeze
 
-  class_inheritable_accessor :operators, :defaults, :instance_reader => false, :instance_writer => false
+  class_attribute :operators, :defaults, :instance_reader => false, :instance_writer => false
   self.operators = DEFAULT_OPERATORS.dup
   self.defaults  = [:eq, :not_eq]
 
