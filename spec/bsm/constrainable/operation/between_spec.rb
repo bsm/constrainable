@@ -12,6 +12,7 @@ describe Bsm::Constrainable::Operation::Between do
     subject.parsed.should == ['1', '100']
     subject("2...5").parsed.should == ['2', '5']
     subject("3..7").parsed.should == ['3', '7']
+    subject(3..7).parsed.should == ['3', '7']
     subject("  2  ......  8   ").parsed.should == ['2', '8']
     subject("2010-01-01..2011-01-01").parsed.should == ['2010-01-01', '2011-01-01']
     subject(" ").parsed.should be_nil

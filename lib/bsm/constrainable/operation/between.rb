@@ -3,6 +3,8 @@ module Bsm::Constrainable::Operation
 
     def parsed
       result = case value
+      when Range
+        [value.first, value.last]
       when /^ *(.+?) *\.{2,} *(.+?) *$/
         [$1, $2]
       else
