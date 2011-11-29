@@ -64,7 +64,7 @@ describe Bsm::Constrainable::Field::Base do
   end
 
   it 'should store unrecognized options' do
-    Bsm::Constrainable::Field::String.new("some", :allow_blank => true).options.should == {:allow_blank=>true}
+    Bsm::Constrainable::Field::String.new("some", :allow_blank => true).options.should == { :allow_blank => true }
   end
 
 end
