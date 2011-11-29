@@ -63,5 +63,9 @@ describe Bsm::Constrainable::Field::Base do
     rel.first.should == posts(:article)
   end
 
+  it 'should store unrecognized options' do
+    Bsm::Constrainable::Field::String.new("some", :allow_blank => true).options.should == {:allow_blank=>true}
+  end
+
 end
 

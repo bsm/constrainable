@@ -11,7 +11,7 @@ class Bsm::Constrainable::Field::Base
     @kind ||= name.demodulize.underscore.to_sym
   end
 
-  attr_reader :name, :operators, :attribute, :scope
+  attr_reader :name, :operators, :attribute, :scope, :options
 
   # Accepts a name and options. Valid options are:
   # * <tt>:using</tt> - a Symbol or a Proc pointing to a DB column, optional (uses name by default)
@@ -28,10 +28,11 @@ class Bsm::Constrainable::Field::Base
   #
   def initialize(name, options = {})
     @name      = name.to_s
-    @attribute = options[:using] || name
-    @operators = Set.new(self.class.operators & Array.wrap(options[:with]))
+    @options   = options.dup
+    @attribute = @options.delete(:using) || name
+    @operators = Set.new(self.class.operators & Array.wrap(@options.delete(:with)))
     @operators = Set.new(self.class.defaults) if @operators.empty?
-    @scope     = options[:scope]
+    @scope     = @options.delete(:scope)
   end
 
   # Merge params into a relation

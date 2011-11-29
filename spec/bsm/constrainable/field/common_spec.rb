@@ -2,9 +2,7 @@ require "spec_helper"
 
 describe "Common Fields" do
 
-  def subject(value = "")
-    described_class.new(value)
-  end
+  let(:subject) { described_class.new('') }
 
   describe Bsm::Constrainable::Field::Number do
     it { subject.class.should have(9).operators }
@@ -32,6 +30,11 @@ describe "Common Fields" do
     it { subject.class.should have(2).operators }
     it { subject.convert(1).should == "1" }
     it { subject.convert(["a", 1]).should == ["a", "1"] }
+    it { subject.convert("").should be_nil }
+    it {
+      subject.options[:allow_blank] = true
+      subject.convert("").should == ""
+    }
   end
 
   describe Bsm::Constrainable::Field::Timestamp do

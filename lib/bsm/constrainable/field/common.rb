@@ -23,6 +23,11 @@ module Bsm::Constrainable::Field
 
   class String < Base
     self.operators = [:eq, :not_eq]
+
+    def _convert(v)
+      result = super
+      result.blank? && !options[:allow_blank] ? nil : result
+    end
   end
 
   class Timestamp < Base
