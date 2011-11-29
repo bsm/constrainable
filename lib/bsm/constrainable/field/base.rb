@@ -16,7 +16,7 @@ class Bsm::Constrainable::Field::Base
   # Accepts a name and options. Valid options are:
   # * <tt>:using</tt> - a Symbol or a Proc pointing to a DB column, optional (uses name by default)
   # * <tt>:with</tt> - a list of operators to use
-  # * <tt>:scope</tt> - a Proc containing additonal scopes
+  # * <tt>:scope</tt> - a Proc containing additional scopes
   #
   # Examples:
   #
