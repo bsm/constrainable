@@ -1,7 +1,7 @@
 # Extension for ActiveRecord::Relation
 module Bsm::Constrainable::Relation
 
-  # Apply contraints. Example:
+  # Apply constraints. Example:
   #
   #   Post.constrain("created_at__lt" => "2011-01-01")
   #

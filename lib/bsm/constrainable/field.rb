@@ -9,6 +9,7 @@ module Bsm::Constrainable::Field
   autoload :Timestamp,'bsm/constrainable/field/common'
   autoload :Datetime, 'bsm/constrainable/field/common'
   autoload :Date,     'bsm/constrainable/field/common'
+  autoload :Boolean,     'bsm/constrainable/field/common'
 
   register self::Number
   register self::Integer
@@ -17,4 +18,5 @@ module Bsm::Constrainable::Field
   register self::Timestamp
   register self::Datetime
   register self::Date
+  register self::Boolean
 end

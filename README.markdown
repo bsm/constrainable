@@ -1,10 +1,10 @@
 # Constrainable
 
-Simple filtering for ActiveRecord. Sanitizes simple and readable query parameters -great for building APIs & HTML filters.
+Simple filtering for ActiveRecord. Sanitizes simple and readable query parameters - great for building APIs & HTML filters.
 
 ## Straight to the point. Examples:
 
-Let's asume we have a model called Post, defined as:
+Let's assume we have a model called Post, defined as:
     Post(id: integer, title: string, body: string, author_id: integer, category: string, created_at: datetime, updated_at: datetime)
 
 In the simplest possible case you can define a few attributes and start filtering:
@@ -17,7 +17,7 @@ In the simplest possible case you can define a few attributes and start filterin
 
     end
 
-    # Examle request:
+    # Example request:
     #   GET /posts?where[id__not_eq]=1&where[author_id__eq]=2
     # Params:
     #   "where" => { "id__not_eq" => "1", "author_id__eq" => "2" }
@@ -84,8 +84,8 @@ Integration with controllers, views & filter forms:
       respond_to :html
 
       def index
-        @filters = Post.constrainable.fliter(params[:where])
-        @posts = Post.constrain(@filters)
+        @filters = Post.constrainable.filter(params[:where])
+        @posts   = Post.constrain(@filters)
         respond_with @posts
       end
     end
