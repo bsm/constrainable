@@ -58,7 +58,9 @@ describe "Common Fields" do
   describe Bsm::Constrainable::Field::Boolean do
     it { subject.class.should have(2).operators }
     it { subject.convert("true").should == true }
+    it { subject.convert("t").should == true }
     it { subject.convert("1").should == true }
+    it { subject.convert(1).should == true }
     it { subject.convert("false").should == false }
     it { subject.convert("0").should == false }
     it { subject.convert("").should == nil }

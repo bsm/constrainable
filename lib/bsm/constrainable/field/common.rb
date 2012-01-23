@@ -52,13 +52,14 @@ module Bsm::Constrainable::Field
   class Boolean < Base
     self.operators = [:eq, :not_eq]
 
-    TRUE_VALUES = ["true", "1"]
+    TRUE_VALUES = ["true", "TRUE", "t", "T", "1", 1].to_set.freeze
+    FALSE_VALUES = ["false", "FALSE", "f", "F", "0", 0].to_set.freeze
 
     protected
 
     def _convert(v)
       result = super
-      result.blank? ? nil : TRUE_VALUES.include?(result)
+      TRUE_VALUES.include?(result) || (FALSE_VALUES.include?(result) ? false : nil)
     end
   end
 
