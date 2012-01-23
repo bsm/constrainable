@@ -23,6 +23,11 @@ module Bsm::Constrainable::Field
 
   class String < Base
     self.operators = [:eq, :not_eq]
+
+    def _convert(v)
+      result = super
+      result.blank? && !options[:allow_blank] ? nil : result
+    end
   end
 
   class Timestamp < Base
@@ -43,4 +48,18 @@ module Bsm::Constrainable::Field
       v.to_date rescue nil
     end
   end
+
+  class Boolean < Base
+    self.operators = [:eq, :not_eq]
+
+    TRUE_VALUES = ["true", "1"]
+
+    protected
+
+    def _convert(v)
+      result = super
+      result.blank? ? nil : TRUE_VALUES.include?(result)
+    end
+  end
+
 end
