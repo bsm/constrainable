@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    constrainable (0.5.1)
+    constrainable (0.6.0)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
 
