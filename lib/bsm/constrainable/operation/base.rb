@@ -1,5 +1,4 @@
 class Bsm::Constrainable::Operation::Base
-  extend ActiveSupport::Memoizable
 
   def self.kind
     name.demodulize.underscore.to_sym
@@ -27,9 +26,9 @@ class Bsm::Constrainable::Operation::Base
   end
 
   def clause
-    valid? ? _clause : nil
+    return @clause if defined?(@clause)    
+    @clause ||= valid? ? _clause : nil
   end
-  memoize :clause
 
   protected
 
@@ -38,18 +37,16 @@ class Bsm::Constrainable::Operation::Base
     end
 
     def normalized
-      field.convert(parsed)
+      @normalized ||= field.convert(parsed)
     end
-    memoize :normalized
 
     def attribute
-      case field.attribute
+      @attribute ||= case field.attribute
       when Proc
         field.attribute.call(relation)
       else
         relation.table[field.attribute]
       end
     end
-    memoize :attribute
 
 end
